@@ -1,12 +1,15 @@
-from app import app, events, Event
+import os
+print("test_app.py loaded from:", __file__)
+print("CWD:", os.getcwd())
+from app import app, events
 import pytest
 
 @pytest.fixture(autouse=True)
 def reset_data():
     # Reset the in-memory "database" before each test
     events.clear()
-    events.append(Event(1, "Tech Meetup"))
-    events.append(Event(2, "Python Workshop"))
+    events.append({"id": 1, "title": "Tech Meetup"})
+    events.append({"id": 2, "title": "Python Workshop"})
 
 def test_create_event():
     client = app.test_client()
